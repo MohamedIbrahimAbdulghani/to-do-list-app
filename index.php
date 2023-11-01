@@ -1,3 +1,11 @@
+<?php
+
+require_once "functions/app.php";
+$result = selectTasks();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,20 +15,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <title>Document</title>
+    <title>To-do-list-App</title>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col-8 mx-auto">
-                <form action="#" method="POST" class="form border p-2 my-5">
+                <form action="handlers/store-tasks.php" method="POST" class="form border p-2 my-5">
+                    <?php if(isset($_SESSION["success"])): ?>
+                        <div class="alert alert-success text-center"><?php echo $_SESSION["success"]; session_unset(); ?></div>
+                    <?php endif; ?>
+                    <?php if(isset($_SESSION["error"])): ?>
+                        <div class="alert alert-danger text-center"><?php echo $_SESSION["error"]; session_unset(); ?></div>
+                    <?php endif; ?>
                     <input type="text" name="title" class="form-control my-3 border border-success" placeholder="add new todo">
                     <input type="submit" value="Add" class="form-control btn btn-primary my-3 " placeholder="add new todo">
                 </form>
             </div>
             <div class="col-12">
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -29,15 +43,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>New Task</td>
+                        <?php if(!empty($result)): ?>
+                            <?php foreach($result as $res): ?>
+                                <tr>
+                                <td><?php echo $res["id"] ?></td>
+                                <td><?php echo $res["title"] ?></td>
                                 <td>
                                     <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> </a>
                                     <a href="#" class="btn btn-info"><i class="fa-solid fa-edit"></i> </a>
                                 </td>
                             </tr>
-
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
