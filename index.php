@@ -2,6 +2,8 @@
 
 require_once "functions/app.php";
 $result = selectTasks();
+
+
 ?>
 
 
@@ -49,8 +51,8 @@ $result = selectTasks();
                                 <td><?php echo $res["id"] ?></td>
                                 <td><?php echo $res["title"] ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> </a>
-                                    <a href="#" class="btn btn-info"><i class="fa-solid fa-edit"></i> </a>
+                                    <a href="handlers/delete-task.php?id=<?php echo $res["id"] ?>" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> </a>
+                                    <a href="handlers/update-task.php?id=<?php echo $res["id"] ?>" class="btn btn-info"><i class="fa-solid fa-edit"></i> </a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
