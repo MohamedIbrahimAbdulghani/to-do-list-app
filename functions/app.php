@@ -41,8 +41,14 @@ function selectTaskById($id) {
     return $all;
 }
 // this function to update tasks from database
-function updateTasks($title, $id) {
+function updateTasks($id, $title) {
     global $connection_database;
     $sql = "UPDATE `tasks` SET `title`='$title' WHERE `id` = '$id' ";
     $q = mysqli_query($connection_database, $sql);
+    $result = mysqli_affected_rows($connection_database);
+    if($result):
+        return true;
+    else:
+        return false;
+    endif;
 }
